@@ -22,7 +22,7 @@ mailer.sendHTMLMail({
     callback?: (result, error) => {}
 });
 
-// plain test mail
+// plain text mail
 mailer.sendPlainTextMail({
     to: "recipient-email",
     from: "sender-email",
