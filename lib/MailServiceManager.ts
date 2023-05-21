@@ -24,7 +24,7 @@ class MailServiceManager {
   private static getTransport() {
     if (this.transport) {
       if (!process.env.SEND_GRID_API_KEY) {
-        throw new Error(`Please add send grif api key in env file for:
+        throw new Error(`Please add send grid api key in env file for:
             SEND_GRID_API_KEY =  `);
       }
       const options: SendGridConfig = {
