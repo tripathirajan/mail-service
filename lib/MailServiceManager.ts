@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import { SendGridConfig } from './types';
-import { default as sendGridTransport } from './support';
 import MailAgent from './MailAgent';
+import { default as getSendGridTransport } from './SendGridTransport';
 
 /**
  * Mail service manager
@@ -22,7 +22,7 @@ class MailServiceManager {
    * @returns
    */
   private static getTransport() {
-    if (this.transport) {
+    if (!this.transport) {
       if (!process.env.SEND_GRID_API_KEY) {
         throw new Error(`Please add send grid api key in env file for:
             SEND_GRID_API_KEY =  `);
@@ -30,7 +30,8 @@ class MailServiceManager {
       const options: SendGridConfig = {
         auth: { api_key: process.env.SEND_GRID_API_KEY },
       };
-      this.transport = nodemailer.createTransport(sendGridTransport({ ...options }));
+      const transport = getSendGridTransport({ ...options }) as any;
+      this.transport = nodemailer.createTransport(transport);
     }
     return this.transport;
   }
